@@ -1,0 +1,40 @@
+version: '3'
+services:
+  master:
+    image: redis:latest
+    container_name: redis_master  #master节点
+    volumes:
+      - ./master/config/redis.conf:/etc/redis/redis.conf
+      - ./master/data:/data
+    command: /bin/bash -c "redis-server /etc/redis/redis.conf"  #这句话就是要加载这个路径下的配置
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    ports:
+      - "6378:6379"
+
+  slave1:
+    image: redis:latest
+    container_name: redis_slave_1   #slave1节点
+    volumes:
+      - ./slave1/config/redis.conf:/etc/redis/redis.conf
+      - ./slave1/data:/data
+    command: /bin/bash -c "redis-server /etc/redis/redis.conf"
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    ports:
+      - "6380:6379"
+
+  slave2:
+    image: redis:latest
+    container_name: redis_slave_2   #slave2节点
+    volumes:
+      - ./slave2/config/redis.conf:/etc/redis/redis.conf
+      - ./slave2/data:/data
+    command: /bin/bash -c "redis-server /etc/redis/redis.conf"
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    ports:
+      - "6381:6379"
